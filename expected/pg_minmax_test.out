@@ -1,0 +1,166 @@
+-- Create extension
+CREATE EXTENSION pg_minmax;
+-- Create sample tables
+-- Sample table with INT datatype
+CREATE TABLE random_integers (
+    random_column integer
+);
+INSERT INTO random_integers (random_column) VALUES (1);
+INSERT INTO random_integers (random_column) VALUES (2);
+INSERT INTO random_integers (random_column) VALUES (3);
+INSERT INTO random_integers (random_column) VALUES (4);
+INSERT INTO random_integers (random_column) VALUES (5);
+INSERT INTO random_integers (random_column) VALUES (6);
+INSERT INTO random_integers (random_column) VALUES (7);
+INSERT INTO random_integers (random_column) VALUES (8);
+INSERT INTO random_integers (random_column) VALUES (9);
+INSERT INTO random_integers (random_column) VALUES (10);
+-- Sample table with FLOAT datatype
+CREATE TABLE random_floats (
+    random_column double precision
+);
+INSERT INTO random_floats (random_column) VALUES (85.05906875135487);
+INSERT INTO random_floats (random_column) VALUES (34.91024974055961);
+INSERT INTO random_floats (random_column) VALUES (26.684664148821113);
+INSERT INTO random_floats (random_column) VALUES (69.93896249401317);
+INSERT INTO random_floats (random_column) VALUES (41.208724529606755);
+INSERT INTO random_floats (random_column) VALUES (56.15534980221213);
+INSERT INTO random_floats (random_column) VALUES (88.30378443776361);
+INSERT INTO random_floats (random_column) VALUES (5.689305782626519);
+INSERT INTO random_floats (random_column) VALUES (63.36016960999906);
+INSERT INTO random_floats (random_column) VALUES (80.94970802779926);
+-- Sample table with TIMESTAMP datatype
+CREATE TABLE random_timestamps (
+    random_column timestamp with time zone
+);
+INSERT INTO random_timestamps (random_column) VALUES ('2022-06-09 10:07:59.816111+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2021-11-24 21:25:15.477269+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-09-22 02:35:36.395003+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-03-19 12:05:25.257016+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2021-11-06 18:18:20.435524+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-06-06 21:38:38.247212+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-08-26 13:11:50.864518+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2021-12-24 19:04:48.175961+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-04-17 09:15:13.302075+00');
+INSERT INTO random_timestamps (random_column) VALUES ('2022-05-13 08:21:57.244644+00');
+-- Sample table with TEXT datatype
+CREATE TABLE random_text (
+    random_column text
+);
+INSERT INTO random_text (random_column) VALUES ('bd9a78102e263128410ef31ef1bea371');
+INSERT INTO random_text (random_column) VALUES ('2647bba73cef040f17160beba8b99071');
+INSERT INTO random_text (random_column) VALUES ('048861fa76fd741765b29d47ea806e2b');
+INSERT INTO random_text (random_column) VALUES ('96b3d9d7a33d21f5ba79df820721b4cb');
+INSERT INTO random_text (random_column) VALUES ('55f88594a239827389acab3e8ca4a679');
+INSERT INTO random_text (random_column) VALUES ('c5b20d11de65f934d4e540bac0d2f42d');
+INSERT INTO random_text (random_column) VALUES ('ac5db45e8b3530230c6b2bbccb427f83');
+INSERT INTO random_text (random_column) VALUES ('385fd3eb84b4444fd8321dac849fdfc7');
+INSERT INTO random_text (random_column) VALUES ('dd488e59712f3df0caf99366dbcbba69');
+INSERT INTO random_text (random_column) VALUES ('ee39cca319b37558e493860a9eb06d57');
+-- Sample table with numeric datatype
+CREATE TABLE random_numeric (
+    random_column numeric
+);
+INSERT INTO random_numeric (random_column) VALUES ('0');
+INSERT INTO random_numeric (random_column) VALUES ('0.1');
+INSERT INTO random_numeric (random_column) VALUES ('-10');
+INSERT INTO random_numeric (random_column) VALUES ('-6.9');
+INSERT INTO random_numeric (random_column) VALUES ('4');
+INSERT INTO random_numeric (random_column) VALUES ('90.5');
+INSERT INTO random_numeric (random_column) VALUES ('-32.4');
+INSERT INTO random_numeric (random_column) VALUES ('4');
+INSERT INTO random_numeric (random_column) VALUES ('20');
+INSERT INTO random_numeric (random_column) VALUES ('-8');
+-- Sample table with numeric datatype
+CREATE TABLE random_null (
+    random_column text
+);
+INSERT INTO random_null (random_column) VALUES (null);
+INSERT INTO random_null (random_column) VALUES (null);
+INSERT INTO random_null (random_column) VALUES (null);
+INSERT INTO random_null (random_column) VALUES (null);
+INSERT INTO random_null (random_column) VALUES (null);
+INSERT INTO random_null (random_column) VALUES (null);
+-- Sample empty table
+CREATE TABLE random_empty (
+    random_column text
+);
+-- Sample table with jason datatype
+CREATE TABLE random_json (
+id serial PRIMARY KEY,
+random_column json
+);
+INSERT INTO random_json (random_column)
+VALUES
+    ('{"name": "John", "age": 30, "city": "New York"}'),
+    ('{"name": "Alice", "age": 25, "city": "San Francisco"}');
+-- Example usage:
+-- OK
+SELECT max_to_min('random_integers', 'random_column');
+NOTICE:  Searching for table_name = random_integers, column_name = random_column, search_path = "$user",public
+ max_to_min
+------------
+ 10 -> 1
+(1 row)
+
+-- OK
+SELECT max_to_min('random_floats', 'random_column');
+NOTICE:  Searching for table_name = random_floats, column_name = random_column, search_path = "$user",public
+              max_to_min
+--------------------------------------
+ 88.3037844377636 -> 5.68930578262652
+(1 row)
+
+-- OK
+SELECT max_to_min('random_timestamps', 'random_column');
+NOTICE:  Searching for table_name = random_timestamps, column_name = random_column, search_path = "$user",public
+                                 max_to_min
+----------------------------------------------------------------------------
+ Wed Sep 21 19:35:36.395003 2022 PDT -> Sat Nov 06 11:18:20.435524 2021 PDT
+(1 row)
+
+-- OK
+SELECT max_to_min('random_text', 'random_column');
+NOTICE:  Searching for table_name = random_text, column_name = random_column, search_path = "$user",public
+                              max_to_min
+----------------------------------------------------------------------
+ ee39cca319b37558e493860a9eb06d57 -> 048861fa76fd741765b29d47ea806e2b
+(1 row)
+
+-- OK
+SELECT max_to_min('random_numeric', 'random_column');
+NOTICE:  Searching for table_name = random_numeric, column_name = random_column, search_path = "$user",public
+  max_to_min
+---------------
+ 90.5 -> -32.4
+(1 row)
+
+-- NOK - column does not exists
+SELECT max_to_min('random_floats', 'abc');
+NOTICE:  Searching for table_name = random_floats, column_name = abc, search_path = "$user",public
+ERROR:  Column abc for table random_floats not found.
+CONTEXT:  PL/pgSQL function max_to_min(text,text) line 28 at RAISE
+-- NOK - table does not exists
+SELECT max_to_min('abc', 'random_column');
+NOTICE:  Searching for table_name = abc, column_name = random_column, search_path = "$user",public
+ERROR:  Column random_column for table abc not found.
+CONTEXT:  PL/pgSQL function max_to_min(text,text) line 28 at RAISE
+-- NOK - column has only NULL values
+SELECT max_to_min('random_null', 'random_column');
+NOTICE:  Searching for table_name = random_null, column_name = random_column, search_path = "$user",public
+ERROR:  Column random_column in table random_null has only null values.
+CONTEXT:  PL/pgSQL function max_to_min(text,text) line 48 at RAISE
+-- NOK - table is empty
+SELECT max_to_min('random_empty', 'random_column');
+NOTICE:  Searching for table_name = random_empty, column_name = random_column, search_path = "$user",public
+ERROR:  Table random_empty has no records.
+CONTEXT:  PL/pgSQL function max_to_min(text,text) line 38 at RAISE
+-- NOK - using non-text, non-numeric, non-datetime data (JSON in this case)
+SELECT max_to_min('random_json', 'random_column');
+NOTICE:  Searching for table_name = random_json, column_name = random_column, search_path = "$user",public
+ERROR:  An unexpected error occurred in the function. This may be due to invalid input data.
+CONTEXT:  PL/pgSQL function max_to_min(text,text) line 62 at RAISE
+-- Cleaning
+DROP EXTENSION pg_minmax;
+\c postgres
+DROP DATABASE contrib_regression;

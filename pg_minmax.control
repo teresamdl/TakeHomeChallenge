@@ -1,0 +1,4 @@
+# pg_minmax extension
+comment = 'Get min and max of a column'
+default_version = '0.0.1'
+relocatable = true
