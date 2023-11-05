@@ -1,5 +1,3 @@
-README.md
-
 # PostgreSQL Aggregate Function README
 
 This repository contains a PostgreSQL aggregate function named `max_to_min` that calculates the maximum and minimum values of a specified column in a given table and returns the result in a text format, like "max -> min."
